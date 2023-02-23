@@ -14,13 +14,16 @@ class _AddUserState extends State<AddUser> {
   @override
   void initState() {
     super.initState();
-    nameController.text = widget.map == null ? "" : widget.map!['name'];
+    nameController.text =
+        widget.map == null ? "" : widget.map!['name'].toString();
     departmentController.text =
-        widget.map == null ? "" : widget.map!['department'];
-    rollnoController.text = widget.map == null ? "" : widget.map!['rollno'];
-    dobController.text = widget.map == null ? "" : widget.map!['dob'];
+        widget.map == null ? "" : widget.map!['department'].toString();
+    rollnoController.text =
+        widget.map == null ? "" : widget.map!['rollno'].toString();
+    dobController.text =
+        widget.map == null ? "" : widget.map!['dob'].toString();
     imgPathController.text =
-        widget.map == null ? "" : widget.map!['studentimg'];
+        widget.map == null ? "" : widget.map!['studentimg'].toString();
   }
 
   TextEditingController nameController = TextEditingController();
@@ -124,7 +127,11 @@ class _AddUserState extends State<AddUser> {
                   if (_formKey.currentState!.validate()) {
                     if (widget.map == null) {
                       addUser().then(
-                        (value) => Navigator.of(context).pop(true),
+                        (value) => Navigator.of(context).pop(),
+                      );
+                    } else {
+                      updateUser(widget.map!['id']).then(
+                        (value) => Navigator.of(context).pop(),
                       );
                     }
                   }
@@ -155,5 +162,19 @@ class _AddUserState extends State<AddUser> {
   Future<void> deleteUser(id) async {
     var response = await http.delete(
         Uri.parse("https://631327f4a8d3f673ffc55a53.mockapi.io/student/${id}"));
+  }
+
+  Future<void> updateUser(id) async {
+    Map map = {};
+    map['name'] = nameController.text;
+    map['department'] = departmentController.text;
+    map['rollno'] = rollnoController.text;
+    map['dob'] = dobController.text;
+    map['studentimg'] = imgPathController.text;
+
+    var response1 = await http.put(
+        Uri.parse("https://631327f4a8d3f673ffc55a53.mockapi.io/student/${id}"),
+        body: map);
+    print(response1.body);
   }
 }

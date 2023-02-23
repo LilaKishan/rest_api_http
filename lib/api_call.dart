@@ -30,9 +30,9 @@ class _ApiCallState extends State<ApiCall> {
                 )
                     .then(
                   (value) {
-                    if (value == true) {
-                      setState(() {});
-                    }
+                    setState(() {
+                      getDataFromWebServer();
+                    });
                   },
                 );
               },
@@ -61,11 +61,6 @@ class _ApiCallState extends State<ApiCall> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Image.network(
-                              //   (jsonDecode(snapshot.data!.body.toString())[
-                              //           index]['studentimg']
-                              //       .toString()),
-                              // ),
                               Text(
                                 (jsonDecode(snapshot.data!.body.toString())[
                                         index]['name']
@@ -87,12 +82,62 @@ class _ApiCallState extends State<ApiCall> {
                           ),
                         ),
                         InkWell(
-                          child: Icon(
-                            Icons.chevron_right,
-                            color: Colors.grey,
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                child: AlertDialog(
+                                    title: Text('Are you sure?'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: Text('No')),
+                                      TextButton(
+                                          onPressed: () {
+                                            deleteUser((jsonDecode(snapshot
+                                                    .data!.body
+                                                    .toString())[index]['id']))
+                                                .then(
+                                              (value) {
+                                                setState(() {
+                                                  getDataFromWebServer();
+                                                  Navigator.of(context).pop();
+                                                });
+                                              },
+                                            );
+                                          },
+                                          child: Text('Yes'))
+                                    ]),
+                              );
+                            },
                           ),
-                          onTap: () {},
-                        )
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(
+                              MaterialPageRoute(
+                                builder: (context) => AddUser(
+                                    jsonDecode(snapshot.data!.body)[index]),
+                              ),
+                            )
+                                .then(
+                              (value) {
+                                setState(() {});
+                              },
+                            );
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.green,
+                            size: 24,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -120,7 +165,6 @@ class _ApiCallState extends State<ApiCall> {
     var response = await http.get(Uri.parse(url));
     //print(response.body.toString());
 
-    var response1 = await http.post(Uri.parse(url));
     return response;
   }
 
