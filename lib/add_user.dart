@@ -58,6 +58,7 @@ class _AddUserState extends State<AddUser> {
                 labelText: "Enter  Name",
               ),
             ),
+            //username
             SizedBox(height: 20),
             TextFormField(
               controller: departmentController,
@@ -73,6 +74,7 @@ class _AddUserState extends State<AddUser> {
                 labelText: "department",
               ),
             ),
+            //department
             SizedBox(height: 20),
             TextFormField(
               keyboardType: TextInputType.number,
@@ -88,6 +90,7 @@ class _AddUserState extends State<AddUser> {
                 labelText: "Roll no",
               ),
             ),
+            //rollno
             SizedBox(height: 20),
             TextFormField(
               controller: dobController,
@@ -103,6 +106,7 @@ class _AddUserState extends State<AddUser> {
                 labelText: "DOB",
               ),
             ),
+            //dob
             SizedBox(height: 20),
             TextFormField(
               controller: imgPathController,
@@ -118,6 +122,7 @@ class _AddUserState extends State<AddUser> {
                 labelText: 'Studentimgpath',
               ),
             ),
+            //studentimgpath
             SizedBox(
               height: 20,
             ),
@@ -139,6 +144,7 @@ class _AddUserState extends State<AddUser> {
               },
               child: Text('Add'),
             )
+            //submit
           ]),
         ),
       ),

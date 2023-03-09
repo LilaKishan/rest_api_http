@@ -117,6 +117,7 @@ class _ApiCallState extends State<ApiCall> {
                             color: Colors.red,
                           ),
                         ),
+                        //delete
                         InkWell(
                           onTap: () {
                             Navigator.of(context)
@@ -138,6 +139,7 @@ class _ApiCallState extends State<ApiCall> {
                             size: 24,
                           ),
                         ),
+                        //edit
                       ],
                     ),
                   ),
