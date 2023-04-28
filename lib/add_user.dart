@@ -128,7 +128,7 @@ class _AddUserState extends State<AddUser> {
             ),
             ElevatedButton(
               onPressed: () {
-                setState(() async {
+                setState(() {
                   if (_formKey.currentState!.validate()) {
                     if (widget.map == null) {
                       addUser().then(
